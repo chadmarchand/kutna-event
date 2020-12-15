@@ -1,0 +1,39 @@
+buildscript {
+    repositories {
+        mavenLocal()
+        jcenter()
+        maven {
+            url 'https://dl.bintray.com/cmarchand/kutna-gradle-plugin'
+        }
+    }
+
+    ext {
+        kutnaEventGroupId = 'com.chadmarchand.kutna'
+        kutnaEventArtifactId = 'kutna-event'
+        kutnaEventVersion = '1.0.0'
+        kutnaEventVcsRepoUrl = 'https://github.com/chadmarchand/kutna-event.git'
+        kutnaEventDescription = 'Internal event bus library'
+    }
+
+    dependencies {
+        classpath 'com.chadmarchand.kutna:kutna-gradle-plugin:1.0.102'
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.5'
+    }
+}
+
+apply plugin: com.chadmarchand.kutna.gradle.KutnaPlugin
+
+repositories {
+    mavenCentral()
+    jcenter()
+}
+
+group "$kutnaEventGroupId"
+version "$kutnaEventVersion"
+
+task configurePublishing(type: com.chadmarchand.kutna.gradle.KutnaPublishingTask) {
+    publishedArtifactId = "$kutnaEventArtifactId"
+    artifactVersion = "$kutnaEventVersion"
+    artifactDescription = "$kutnaEventDescription"
+    vcsRepoUrl = "$kutnaEventVcsRepoUrl"
+}
